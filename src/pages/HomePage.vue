@@ -8,13 +8,16 @@
           <div>
             <img :src="house.image" alt="House Image" />
             <div>
-              <p>{{ house.address }}</p>
-              <p>{{ house.postal_code }} {{ house.city }}</p>
+              <p>
+                {{ house.location.street }} {{ house.location.houseNumber }}
+              </p>
+              <p>€ {{ house.price }}</p>
+              <p>{{ house.location.zip }} {{ house.location.city }}</p>
             </div>
             <div>
-              <p>Size: {{ house.size }}</p>
-              <p>Bedrooms: {{ house.bedrooms }}</p>
-              <p>Bathrooms: {{ house.bathrooms }}</p>
+              <p>Size: {{ house.size }} m2</p>
+              <p>Bedrooms: {{ house.rooms.bedrooms }}</p>
+              <p>Bathrooms: {{ house.rooms.bathrooms }}</p>
             </div>
           </div>
         </li>
@@ -37,10 +40,5 @@ export default {
   created() {
     this.fetchAllHouses();
   },
-  //   async mounted() {
-  //     if (this.allHouses.length === 0) {
-  //       await this.fetchAllHouses();
-  //     }
-  //   },
 };
 </script>
