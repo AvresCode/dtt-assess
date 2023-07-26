@@ -22,7 +22,7 @@ export default {
 .nav-links {
   text-decoration: none;
   margin-left: 3rem;
-  color: black;
+  color: rgb(129, 128, 128);
   padding: 0.8rem;
   border-radius: 1rem;
 }
@@ -32,5 +32,6 @@ export default {
 
 .router-link-active {
   font-weight: bolder;
+  color: black;
 }
 </style>
