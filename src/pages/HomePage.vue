@@ -1,10 +1,22 @@
 <template>
   <div>
     <h1>Homepage</h1>
-    <div v-if="allHouses.length === 0">Loading...</div>
+    <div>
+      <input
+        type="text"
+        v-model="searchTerm"
+        @input="filterHouses"
+        placeholder="Search a city..."
+      />
+      <div v-if="showResultNumber">
+        <p>{{ resultNumberMessage }}</p>
+      </div>
+    </div>
+
+    <div v-if="loading">Loading...</div>
     <div v-else>
-      <ul>
-        <li v-for="house in allHouses" :key="house.id">
+      <ul v-if="filteredHouses.length > 0">
+        <li v-for="house in filteredHouses" :key="house.id">
           <div>
             <img :src="house.image" alt="House Image" />
             <div>
@@ -22,23 +34,48 @@
           </div>
         </li>
       </ul>
+      <p v-else>No houses found.</p>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
   name: 'HomePage',
-  computed: {
-    ...mapState(['allHouses']),
-  },
-  methods: {
-    ...mapActions(['fetchAllHouses']),
-  },
-  created() {
-    this.fetchAllHouses();
+  setup() {
+    const store = useStore();
+
+    const searchTerm = ref('');
+
+    const filteredHouses = computed(() =>
+      store.state.allHouses.filter((house) =>
+        house.location.city
+          .toLowerCase()
+          .includes(searchTerm.value.trim().toLowerCase())
+      )
+    );
+
+    const loading = computed(() => store.state.allHouses.length === 0);
+
+    const showResultNumber = computed(() => filteredHouses.value.length > 0);
+    const resultNumberMessage = computed(
+      () =>
+        `${filteredHouses.value.length} houses available!` || 'No house found.'
+    );
+
+    store.dispatch('fetchAllHouses');
+
+    // Computed properties
+    return {
+      searchTerm,
+      filteredHouses,
+      showResultNumber,
+      resultNumberMessage,
+      loading,
+    };
   },
 };
 </script>
