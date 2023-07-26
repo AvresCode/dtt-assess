@@ -6,6 +6,7 @@ const store = createStore({
     allHouses: [],
     searchTerm: '',
     filteredHouses: [],
+    oneHouse: {},
   },
   mutations: {
     setAllHouses: (state, housesData) => {
@@ -16,6 +17,9 @@ const store = createStore({
     },
     setFilteredHouses: (state, filteredHouses) => {
       state.filteredHouses = filteredHouses;
+    },
+    setOneHouse: (state, oneHouseData) => {
+      state.oneHouse = oneHouseData;
     },
   },
 
@@ -32,6 +36,20 @@ const store = createStore({
         commit('setAllHouses', housesData);
       } catch (e) {
         console.log('Houses fetch error:', e);
+      }
+    },
+    async fetchOneHouse({ commit }, houseId) {
+      const URL = `https://api.intern.d-tt.nl/api/houses/${houseId}`;
+
+      try {
+        const response = await axios.get(URL, {
+          headers: { 'X-Api-Key': 'zL6vg_sRSaZfwACpB3MGOUeclmF1kiXr' },
+        });
+        const oneHousesData = response.data[0];
+        console.log('Fetched details', oneHousesData);
+        commit('setOneHouse', oneHousesData);
+      } catch (e) {
+        console.log('House detail fetch error:', e);
       }
     },
   },

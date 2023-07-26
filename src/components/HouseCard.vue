@@ -23,6 +23,7 @@
           <font-awesome-icon :icon="['far', 'square']" /> {{ house.size }} m2
         </p>
       </div>
+      <router-link :to="`/houses/${house.id}`"> View details</router-link>
     </div>
   </div>
 </template>
