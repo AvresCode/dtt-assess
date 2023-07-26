@@ -12,21 +12,7 @@
     <div v-else>
       <ul v-if="filteredHouses.length > 0">
         <li v-for="house in filteredHouses" :key="house.id">
-          <div>
-            <img :src="house.image" alt="House Image" />
-            <div>
-              <p>
-                {{ house.location.street }} {{ house.location.houseNumber }}
-              </p>
-              <p>€ {{ house.price }}</p>
-              <p>{{ house.location.zip }} {{ house.location.city }}</p>
-            </div>
-            <div>
-              <p>Size: {{ house.size }} m2</p>
-              <p>Bedrooms: {{ house.rooms.bedrooms }}</p>
-              <p>Bathrooms: {{ house.rooms.bathrooms }}</p>
-            </div>
-          </div>
+          <HouseCard :house="house" />
         </li>
       </ul>
       <p v-else>No houses found.</p>
@@ -38,10 +24,11 @@
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 import SearchInput from '../components/SearchInput.vue';
+import HouseCard from '../components/HouseCard.vue';
 
 export default {
   name: 'HomePage',
-  components: { SearchInput },
+  components: { SearchInput, HouseCard },
   setup() {
     const store = useStore();
 
