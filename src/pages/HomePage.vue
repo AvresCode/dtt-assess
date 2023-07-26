@@ -2,12 +2,7 @@
   <div>
     <h1>Homepage</h1>
     <div>
-      <input
-        type="text"
-        v-model="searchTerm"
-        @input="filterHouses"
-        placeholder="Search a city..."
-      />
+      <SearchInput :searchTerm="searchTerm" @inputChange="onSearchTermUpdate" />
       <div v-if="showResultNumber">
         <p>{{ resultNumberMessage }}</p>
       </div>
@@ -40,16 +35,17 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import { useStore } from 'vuex';
+import SearchInput from '../components/SearchInput.vue';
 
 export default {
   name: 'HomePage',
+  components: { SearchInput },
   setup() {
     const store = useStore();
 
-    const searchTerm = ref('');
-
+    const searchTerm = computed(() => store.state.searchTerm);
     const filteredHouses = computed(() =>
       store.state.allHouses.filter((house) =>
         house.location.city
@@ -76,6 +72,11 @@ export default {
       resultNumberMessage,
       loading,
     };
+  },
+  methods: {
+    onSearchTermUpdate(newSearchTerm) {
+      this.$store.commit('setSearchTerm', newSearchTerm);
+    },
   },
 };
 </script>
