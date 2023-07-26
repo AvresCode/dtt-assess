@@ -5,7 +5,7 @@
       :value="searchTerm"
       @input="onInputChange"
       placeholder="Search a city..."
-    />
+    /><font-awesome-icon :icon="['fas', 'magnifying-glass']" />
   </div>
 </template>
 <script>

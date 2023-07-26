@@ -11,9 +11,17 @@
       </div>
 
       <div class="facility-section">
-        <p>Bedrooms: {{ house.rooms.bedrooms }}</p>
-        <p>Bathrooms: {{ house.rooms.bathrooms }}</p>
-        <p>Size: {{ house.size }} m2</p>
+        <p>
+          <font-awesome-icon :icon="['fas', 'bed']" />
+          {{ house.rooms.bedrooms }}
+        </p>
+        <p>
+          <font-awesome-icon :icon="['fas', 'bath']" />
+          {{ house.rooms.bathrooms }}
+        </p>
+        <p>
+          <font-awesome-icon :icon="['far', 'square']" /> {{ house.size }} m2
+        </p>
       </div>
     </div>
   </div>
