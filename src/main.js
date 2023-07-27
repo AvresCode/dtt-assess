@@ -4,6 +4,7 @@ import {
   faBath,
   faBed,
   faMagnifyingGlass,
+  faLocationDot,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
@@ -14,7 +15,7 @@ import router from './router';
 
 const app = createApp(App);
 
-library.add(faBath, faBed, faSquare, faMagnifyingGlass);
+library.add(faBath, faBed, faSquare, faMagnifyingGlass, faLocationDot);
 app.component('font-awesome-icon', FontAwesomeIcon);
 
 app.use(store);

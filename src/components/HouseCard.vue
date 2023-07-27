@@ -7,7 +7,11 @@
       <div>
         <h3>{{ house.location.street }} {{ house.location.houseNumber }}</h3>
         <p>€ {{ house.price }}</p>
-        <p>{{ house.location.zip }} {{ house.location.city }}</p>
+        <p>
+          <font-awesome-icon :icon="['fas', 'location-dot']" />
+          {{ house.location.zip }}
+          {{ house.location.city }}
+        </p>
       </div>
 
       <div class="facility-section">
