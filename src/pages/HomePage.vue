@@ -2,6 +2,7 @@
   <div>
     <h1>Homepage</h1>
     <div>
+      <router-link to="/addListing">+ Add New Listing</router-link>
       <SearchInput :searchTerm="searchTerm" @inputChange="onSearchTermUpdate" />
       <div v-if="showResultNumber">
         <p>{{ resultNumberMessage }}</p>
