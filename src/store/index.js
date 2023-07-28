@@ -52,15 +52,29 @@ const store = createStore({
         console.log('House detail fetch error:', e.message);
       }
     },
-    async createListing({ commit }, formData) {
+    async createListing({ commit }, { formData, houseId }) {
       const URL = 'https://api.intern.d-tt.nl/api/houses';
+      const imageURL = `https://api.intern.d-tt.nl/api/houses/${houseId}/upload`;
       try {
-        const response = await axios.post(URL, formData, {
+        const imageUploadResponse = await axios.post(imageURL, formData.image, {
           headers: { 'X-Api-Key': 'zL6vg_sRSaZfwACpB3MGOUeclmF1kiXr' },
+        });
+
+        console.log('Image upload response:', imageUploadResponse.data);
+
+        //create listing
+        // const listingData = { ...formData };
+        // listingData.image = imageUploadResponse.data.url;
+
+        const response = await axios.post(URL, formData, {
+          headers: {
+            'X-Api-Key': 'zL6vg_sRSaZfwACpB3MGOUeclmF1kiXr',
+            'Content-Type': 'multipart/form-data',
+          },
         });
         const newListing = response.data;
         console.log('New listing:', newListing);
-        commit('setAllHouses', [...commit.state.allHouses, newListing]);
+        commit('setOneHouse', newListing);
       } catch (e) {
         console.log('Create Listing error:', e.message);
       }

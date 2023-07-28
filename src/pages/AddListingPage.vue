@@ -78,22 +78,16 @@
         />
       </div>
 
-      <!-- <div class="form-field">
-        <label for="image">Image *</label>
-        <input
-          type="file"
-          id="image"
-          ref="imageInput"
-          @change="handleImageChange"
-          required
-        />
-      </div> -->
       <div class="form-field">
         <label for="hasGarage">Has garage?</label>
         <select id="hasGarage" v-model="formData.hasGarage" required>
           <option value="true">Yes</option>
           <option value="false">No</option>
         </select>
+      </div>
+      <div class="form-field">
+        <label for="image">Image *</label>
+        <input type="file" id="image" @change="handleImageChange" required />
       </div>
       <label for="decsription">Description *</label>
       <textarea v-model="formData.description" required></textarea>
@@ -121,18 +115,39 @@ export default {
       constructionYear: '',
       numberAddition: '',
       hasGarage: 'true',
+      image: null,
       description: '',
     });
 
     const store = useStore();
 
-    const handleSubmit = () => {
+    const handleImageChange = (event) => {
+      formData.image = event.target.files[0];
+      console.log('image', event.target);
+    };
+
+    const handleSubmit = async () => {
       console.log('submitted');
-      store.dispatch('createListing', formData);
+
+      await store.dispatch('fetchAllHouses');
+      const allHouses = store.state.allHouses;
+      const houseId =
+        allHouses.length > 0 ? allHouses[allHouses.length - 1].id : null;
+      console.log('houseId', houseId);
+      if (houseId) {
+        try {
+          await store.dispatch('createListing', { formData, houseId });
+        } catch (error) {
+          console.log('Create Listing error:', error.message);
+        }
+      } else {
+        console.log('No houses found. Cannot create listing without a house.');
+      }
     };
 
     return {
       formData,
+      handleImageChange,
       handleSubmit,
     };
   },
