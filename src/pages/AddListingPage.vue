@@ -3,41 +3,61 @@
     <form @submit.prevent="handleSubmit" class="listing-form">
       <h1>New Listing Form</h1>
       <div class="form-field">
-        <label for="street">Street Name *</label>
-        <input type="text" id="street" v-model="street" required />
+        <label for="streetName">Street Name *</label>
+        <input
+          type="text"
+          id="streetName"
+          v-model="formData.streetName"
+          required
+        />
       </div>
       <div class="fields-join">
         <div class="form-field">
           <label for="houseNumber">House Number *</label>
-          <input type="text" id="houseNumber" v-model="houseNumber" required />
+          <input
+            type="text"
+            id="houseNumber"
+            v-model="formData.houseNumber"
+            required
+          />
         </div>
         <div class="form-field">
           <label for="zip">Zip Code *</label>
-          <input type="text" id="zip" v-model="zip" required />
+          <input type="text" id="zip" v-model="formData.zip" required />
         </div>
       </div>
       <div class="form-field">
         <label for="city">City *</label>
-        <input type="text" id="city" v-model="city" required />
+        <input type="text" id="city" v-model="formData.city" required />
       </div>
       <div class="fields-join">
         <div class="form-field">
           <label for="bedrooms">No. of Bedrooms *</label>
-          <input type="text" id="bedrooms" v-model="bedrooms" required />
+          <input
+            type="text"
+            id="bedrooms"
+            v-model="formData.bedrooms"
+            required
+          />
         </div>
         <div class="form-field">
           <label for="bathrooms">No. of Bathrooms *</label>
-          <input type="text" id="bathrooms" v-model="bathrooms" required />
+          <input
+            type="text"
+            id="bathrooms"
+            v-model="formData.bathrooms"
+            required
+          />
         </div>
       </div>
       <div class="fields-join">
         <div class="form-field">
           <label for="size">Size(m2) *</label>
-          <input type="text" id="size" v-model="size" required />
+          <input type="text" id="size" v-model="formData.size" required />
         </div>
         <div class="form-field">
           <label for="price">Price(€) *</label>
-          <input type="text" id="price" v-model="price" required />
+          <input type="text" id="price" v-model="formData.price" required />
         </div>
       </div>
       <div class="form-field">
@@ -45,25 +65,80 @@
         <input
           type="text"
           id="constructionYear"
-          v-model="constructionYear"
+          v-model="formData.constructionYear"
           required
         />
       </div>
-      <div class="form-field checkbox">
+      <div class="form-field">
+        <label for="numberAddition">Number Addition</label>
+        <input
+          type="text"
+          id="numberAddition"
+          v-model="formData.numberAddition"
+        />
+      </div>
+
+      <!-- <div class="form-field">
+        <label for="image">Image *</label>
+        <input
+          type="file"
+          id="image"
+          ref="imageInput"
+          @change="handleImageChange"
+          required
+        />
+      </div> -->
+      <div class="form-field">
         <label for="hasGarage">Has garage?</label>
-        <input type="checkbox" id="hasGarage" v-model="hasGarage" required />
+        <select id="hasGarage" v-model="formData.hasGarage" required>
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
       </div>
       <label for="decsription">Description *</label>
-      <textarea v-model="description" required></textarea>
+      <textarea v-model="formData.description" required></textarea>
       <button type="submit">Create Listing</button>
     </form>
   </div>
 </template>
+
 <script>
+import { reactive } from 'vue';
+import { useStore } from 'vuex';
+
 export default {
   name: 'AddListing',
+  setup() {
+    const formData = reactive({
+      streetName: '',
+      houseNumber: '',
+      zip: '',
+      city: '',
+      bedrooms: '',
+      bathrooms: '',
+      size: '',
+      price: '',
+      constructionYear: '',
+      numberAddition: '',
+      hasGarage: 'true',
+      description: '',
+    });
+
+    const store = useStore();
+
+    const handleSubmit = () => {
+      console.log('submitted');
+      store.dispatch('createListing', formData);
+    };
+
+    return {
+      formData,
+      handleSubmit,
+    };
+  },
 };
 </script>
+
 <style scoped>
 .form-container {
   max-width: 30rem;
@@ -99,17 +174,21 @@ input {
   display: flex;
   gap: 1rem;
 }
-input[type='checkbox'] {
+/* input[type='checkbox'] {
   width: 2rem;
   width: 1.5rem;
   height: 1.5rem;
-}
+} */
 button {
   padding: 1rem;
+
   width: 50%;
+
   margin: auto;
+
   background-color: rgb(252, 251, 251);
 }
+
 textarea {
   height: 8rem;
 }
