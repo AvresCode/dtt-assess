@@ -176,4 +176,10 @@ button {
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
 }
+
+@media (max-width: 600px) {
+  .top-section {
+    flex-direction: column;
+  }
+}
 </style>
