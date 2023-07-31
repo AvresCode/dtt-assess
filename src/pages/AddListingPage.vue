@@ -127,8 +127,9 @@ export default {
     };
 
     const handleSubmit = async () => {
-      console.log('submitted');
-
+      // console.log('submitted');
+      // const rawFormData = toRaw(formData);
+      // console.log('Form Data:', rawFormData);
       await store.dispatch('fetchAllHouses');
       const allHouses = store.state.allHouses;
       const houseId =

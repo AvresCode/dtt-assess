@@ -57,16 +57,18 @@ const store = createStore({
       const imageURL = `https://api.intern.d-tt.nl/api/houses/${houseId}/upload`;
       try {
         const imageUploadResponse = await axios.post(imageURL, formData.image, {
-          headers: { 'X-Api-Key': 'zL6vg_sRSaZfwACpB3MGOUeclmF1kiXr' },
+          headers: {
+            'X-Api-Key': 'zL6vg_sRSaZfwACpB3MGOUeclmF1kiXr',
+            'Content-Type': 'image/jpeg',
+          },
         });
-
-        console.log('Image upload response:', imageUploadResponse.data);
-
+        console.log('imageUploadResponse', imageUploadResponse);
         //create listing
-        // const listingData = { ...formData };
-        // listingData.image = imageUploadResponse.data.url;
+        const listingData = { ...formData };
+        console.log('listingData', listingData);
+        listingData.image = imageUploadResponse.data.url;
 
-        const response = await axios.post(URL, formData, {
+        const response = await axios.post(URL, listingData, {
           headers: {
             'X-Api-Key': 'zL6vg_sRSaZfwACpB3MGOUeclmF1kiXr',
             'Content-Type': 'multipart/form-data',
