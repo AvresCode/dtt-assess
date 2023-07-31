@@ -190,11 +190,6 @@ input {
   display: flex;
   gap: 1rem;
 }
-/* input[type='checkbox'] {
-  width: 2rem;
-  width: 1.5rem;
-  height: 1.5rem;
-} */
 button {
   padding: 1rem;
 

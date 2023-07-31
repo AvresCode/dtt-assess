@@ -81,6 +81,18 @@ const store = createStore({
         console.log('Create Listing error:', e.message);
       }
     },
+    async deleteListing({ commit }, houseId) {
+      const URL = `https://api.intern.d-tt.nl/api/houses/${houseId}`;
+      try {
+        const response = await axios.delete(URL, {
+          headers: { 'X-Api-Key': 'zL6vg_sRSaZfwACpB3MGOUeclmF1kiXr' },
+        });
+        console.log('Deleted listing:', response.data);
+        commit('deleteHouse', houseId);
+      } catch (e) {
+        console.log('Delete Listing error:', e.message);
+      }
+    },
   },
 });
 

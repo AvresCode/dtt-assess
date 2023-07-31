@@ -37,8 +37,8 @@
             {{ house.description }}
           </p>
         </div>
-        <div>
-          <button class="button-delete">Delete</button>
+        <div v-if="!isOwner">
+          <button @click="handleDelete" class="button-delete">Delete</button>
           <button class="button-edit">Edit</button>
         </div>
       </div>
@@ -64,9 +64,27 @@ export default {
 
     store.dispatch('fetchOneHouse', id);
 
+    const isOwner = computed(() => {
+      return house.value && house.value.madeByMe;
+    });
+    const handleDelete = async () => {
+      const confirmed = window.confirm(
+        'Are you sure you want to delete this listing?'
+      );
+
+      if (confirmed) {
+        try {
+          await store.dispatch('deleteListing', id);
+        } catch (error) {
+          console.log('Delete Listing error:', error.message);
+        }
+      }
+    };
     return {
       loading,
       house,
+      isOwner,
+      handleDelete,
     };
   },
 };
