@@ -19,15 +19,15 @@
         </div>
       </div>
       <div>
-        <button class="button-price">Price</button
+        <button @click="sortHousesByPrice" class="button-price">Price</button
         ><button class="button-size">Size</button>
       </div>
     </div>
 
     <div v-if="loading">Loading...</div>
     <div v-else>
-      <ul v-if="filteredHouses.length > 0">
-        <li v-for="house in filteredHouses" :key="house.id">
+      <ul v-if="sortedFilteredHouses.length > 0">
+        <li v-for="house in sortedFilteredHouses" :key="house.id">
           <HouseCard :house="house" />
         </li>
       </ul>
@@ -51,28 +51,41 @@ export default {
     const store = useStore();
 
     const searchTerm = computed(() => store.state.searchTerm);
-    const filteredHouses = computed(() =>
-      store.state.allHouses.filter((house) =>
+    const allHouses = computed(() => store.state.allHouses);
+
+    const sortHousesByPrice = (houses) => {
+      return houses.sort((a, b) => {
+        return a.price - b.price;
+      });
+    };
+
+    const sortedFilteredHouses = computed(() => {
+      const filteredHouses = allHouses.value.filter((house) =>
         house.location.city
           .toLowerCase()
           .includes(searchTerm.value.trim().toLowerCase())
-      )
-    );
+      );
+
+      return sortHousesByPrice(filteredHouses);
+    });
 
     const loading = computed(() => store.state.allHouses.length === 0);
 
-    const showResultNumber = computed(() => filteredHouses.value.length > 0);
+    const showResultNumber = computed(
+      () => sortedFilteredHouses.value.length > 0
+    );
     const resultNumberMessage = computed(
       () =>
-        `${filteredHouses.value.length} houses available!` || 'No house found.'
+        `${sortedFilteredHouses.value.length} houses available!` ||
+        'No house found.'
     );
 
     store.dispatch('fetchAllHouses');
 
     // Computed properties
     return {
+      sortedFilteredHouses,
       searchTerm,
-      filteredHouses,
       showResultNumber,
       resultNumberMessage,
       loading,
