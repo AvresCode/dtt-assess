@@ -19,8 +19,11 @@
         </div>
       </div>
       <div>
-        <button @click="toggleSortingOrder" class="button-price">Price</button
-        ><button class="button-size">Size</button>
+        <button @click="toggleSortingOrderPrice" class="button-price">
+          Price</button
+        ><button @click="toggleSortingOrderSize" class="button-size">
+          Size
+        </button>
       </div>
     </div>
 
@@ -53,23 +56,35 @@ export default {
     const searchTerm = computed(() => store.state.searchTerm);
     const allHouses = computed(() => store.state.allHouses);
 
-    const sortingOrder = ref(0);
+    const sortingOrderPrice = ref(0);
+    const sortingOrderSize = ref(0);
 
     // Toggle sorting order
-    const toggleSortingOrder = () => {
-      sortingOrder.value = sortingOrder.value === 1 ? -1 : 1; // Toggle between 1 and -1
+    const toggleSortingOrderPrice = () => {
+      sortingOrderPrice.value = sortingOrderPrice.value === 1 ? -1 : 1;
+      sortingOrderSize.value = 0;
     };
-
+    const toggleSortingOrderSize = () => {
+      sortingOrderSize.value = sortingOrderSize.value === 1 ? -1 : 1;
+      sortingOrderPrice.value = 0;
+    };
     const sortHousesByPrice = (houses) => {
-      if (sortingOrder.value === 0) {
+      if (sortingOrderPrice.value === 0) {
         // If unsorted, return the houses as is
         return houses;
       }
       return houses.sort((a, b) => {
-        return (a.price - b.price) * sortingOrder.value;
+        return (a.price - b.price) * sortingOrderPrice.value;
       });
     };
-
+    const sortHousesBySize = (houses) => {
+      if (sortingOrderSize.value === 0) {
+        return houses;
+      }
+      return houses.sort((a, b) => {
+        return (a.size - b.size) * sortingOrderSize.value;
+      });
+    };
     const sortedFilteredHouses = computed(() => {
       const filteredHouses = allHouses.value.filter((house) =>
         house.location.city
@@ -77,7 +92,17 @@ export default {
           .includes(searchTerm.value.trim().toLowerCase())
       );
 
-      return sortHousesByPrice(filteredHouses);
+      // Sort by Price if Price button is clicked
+      if (sortingOrderPrice.value !== 0) {
+        return sortHousesByPrice(filteredHouses);
+      }
+
+      // Sort by Size if Size button is clicked
+      if (sortingOrderSize.value !== 0) {
+        return sortHousesBySize(filteredHouses);
+      }
+      // Return unsorted if neither button is clicked
+      return filteredHouses;
     });
 
     const loading = computed(() => store.state.allHouses.length === 0);
@@ -96,7 +121,8 @@ export default {
     // Computed properties
     return {
       sortedFilteredHouses,
-      toggleSortingOrder,
+      toggleSortingOrderPrice,
+      toggleSortingOrderSize,
       searchTerm,
       showResultNumber,
       resultNumberMessage,
