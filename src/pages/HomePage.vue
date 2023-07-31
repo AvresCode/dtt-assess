@@ -19,7 +19,7 @@
         </div>
       </div>
       <div>
-        <button @click="sortHousesByPrice" class="button-price">Price</button
+        <button @click="toggleSortingOrder" class="button-price">Price</button
         ><button class="button-size">Size</button>
       </div>
     </div>
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import SearchInput from '../components/SearchInput.vue';
 import HouseCard from '../components/HouseCard.vue';
@@ -53,9 +53,16 @@ export default {
     const searchTerm = computed(() => store.state.searchTerm);
     const allHouses = computed(() => store.state.allHouses);
 
+    const sortingOrder = ref(1);
+
+    // Toggle sorting order
+    const toggleSortingOrder = () => {
+      sortingOrder.value *= -1;
+    };
+
     const sortHousesByPrice = (houses) => {
       return houses.sort((a, b) => {
-        return a.price - b.price;
+        return (a.price - b.price) * sortingOrder.value;
       });
     };
 
@@ -85,6 +92,7 @@ export default {
     // Computed properties
     return {
       sortedFilteredHouses,
+      toggleSortingOrder,
       searchTerm,
       showResultNumber,
       resultNumberMessage,
