@@ -53,14 +53,18 @@ export default {
     const searchTerm = computed(() => store.state.searchTerm);
     const allHouses = computed(() => store.state.allHouses);
 
-    const sortingOrder = ref(1);
+    const sortingOrder = ref(0);
 
     // Toggle sorting order
     const toggleSortingOrder = () => {
-      sortingOrder.value *= -1;
+      sortingOrder.value = sortingOrder.value === 1 ? -1 : 1; // Toggle between 1 and -1
     };
 
     const sortHousesByPrice = (houses) => {
+      if (sortingOrder.value === 0) {
+        // If unsorted, return the houses as is
+        return houses;
+      }
       return houses.sort((a, b) => {
         return (a.price - b.price) * sortingOrder.value;
       });
