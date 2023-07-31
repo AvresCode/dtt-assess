@@ -18,6 +18,8 @@ export default {
   list-style-type: none;
   padding: 1rem 5rem;
   border-bottom: 0.2rem solid rgb(244, 242, 242);
+  background-color: white;
+  margin-top: 0;
 }
 .nav-links {
   text-decoration: none;

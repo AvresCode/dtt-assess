@@ -54,7 +54,6 @@ img {
 .one-house-container {
   display: flex;
   border: 0.1rem solid rgb(244, 242, 242);
-  margin: 1rem;
   border-radius: 1rem;
 }
 .text-section {

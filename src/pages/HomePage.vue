@@ -1,11 +1,22 @@
 <template>
-  <div>
-    <h1>Homepage</h1>
-    <div>
-      <router-link to="/addListing">+ Add New Listing</router-link>
-      <SearchInput :searchTerm="searchTerm" @inputChange="onSearchTermUpdate" />
-      <div v-if="showResultNumber">
-        <p>{{ resultNumberMessage }}</p>
+  <div class="homepage-container">
+    <div class="top-section">
+      <h1>Houses</h1>
+      <div>
+        <router-link to="/addListing" class="create-listing-link"
+          >+ CREATE NEW</router-link
+        >
+      </div>
+    </div>
+    <div class="top-section">
+      <div>
+        <SearchInput
+          :searchTerm="searchTerm"
+          @inputChange="onSearchTermUpdate"
+        />
+        <div v-if="showResultNumber">
+          <p>{{ resultNumberMessage }}</p>
+        </div>
       </div>
     </div>
 
@@ -16,7 +27,9 @@
           <HouseCard :house="house" />
         </li>
       </ul>
-      <p v-else>No houses found.</p>
+      <p v-else class="search-no-result">
+        No house found! please try another term.
+      </p>
     </div>
   </div>
 </template>
@@ -71,5 +84,30 @@ export default {
 <style scoped>
 ul {
   list-style-type: none;
+}
+.create-listing-link {
+  text-decoration: none;
+  color: white;
+  padding: 0.6rem 1rem;
+  border: 1px solid red;
+  background-color: rgba(218, 52, 52, 0.968);
+  border-radius: 0.5rem;
+}
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem;
+}
+.search-no-result {
+  margin: 2rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+
+  text-align: center;
+}
+button {
+  padding: 0.5rem 2rem;
+  color: white;
 }
 </style>
