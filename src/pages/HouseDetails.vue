@@ -37,6 +37,10 @@
             {{ house.description }}
           </p>
         </div>
+        <div>
+          <button class="button-delete">Delete</button>
+          <button class="button-edit">Edit</button>
+        </div>
       </div>
     </div>
   </div>
@@ -81,5 +85,19 @@ img {
 .house-properties {
   display: flex;
   gap: 1rem;
+}
+button {
+  padding: 0.5rem 2rem;
+  color: white;
+}
+.button-delete {
+  background-color: rgba(218, 52, 52, 0.968);
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+.button-edit {
+  background-color: rgb(184, 182, 182);
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
 }
 </style>
