@@ -18,6 +18,10 @@
           <p>{{ resultNumberMessage }}</p>
         </div>
       </div>
+      <div>
+        <button class="button-price">Price</button
+        ><button class="button-size">Size</button>
+      </div>
     </div>
 
     <div v-if="loading">Loading...</div>
@@ -109,5 +113,16 @@ ul {
 button {
   padding: 0.5rem 2rem;
   color: white;
+}
+.button-price {
+  background-color: rgba(218, 52, 52, 0.968);
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+
+.button-size {
+  background-color: rgb(184, 182, 182);
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
 }
 </style>
