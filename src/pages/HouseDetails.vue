@@ -40,12 +40,14 @@
         <div v-if="!isOwner">
           <button @click="handleDelete" class="button-delete">Delete</button>
           <button class="button-edit">Edit</button>
-          <ConfirmDialog
-            v-if="showConfirmDialog"
-            :message="'Are you sure you want to delete this listing?'"
-            @confirmed="handleDeleteConfirmed"
-            @canceled="handleDeleteCanceled"
-          />
+          <div class="modal-overlay" v-if="showConfirmDialog">
+            <ConfirmDialog
+              v-if="showConfirmDialog"
+              :message="'Are you sure you want to delete this listing?'"
+              @confirmed="handleDeleteConfirmed"
+              @canceled="handleDeleteCanceled"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -84,19 +86,16 @@ export default {
     };
 
     const handleDeleteConfirmed = async () => {
-      // User confirmed deletion, proceed with actual deletion
       try {
         await store.dispatch('deleteListing', id);
       } catch (error) {
         console.log('Delete Listing error:', error.message);
       }
 
-      // Hide the confirmation dialog
       showConfirmDialog.value = false;
     };
 
     const handleDeleteCanceled = () => {
-      // User canceled deletion, do nothing
       showConfirmDialog.value = false;
     };
 
@@ -140,5 +139,15 @@ button {
   background-color: rgb(184, 182, 182);
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* z-index: 998;  Lower than the dialog to ensure the dialog is on top  */
 }
 </style>
