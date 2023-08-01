@@ -81,7 +81,6 @@ export default {
 
     const handleDelete = () => {
       showConfirmDialog.value = true;
-      console.log('showConfirmDialog.value', showConfirmDialog.value);
     };
 
     const handleDeleteConfirmed = async () => {
@@ -100,19 +99,7 @@ export default {
       // User canceled deletion, do nothing
       showConfirmDialog.value = false;
     };
-    // const handleDelete = async () => {
-    //   const confirmed = window.confirm(
-    //     'Are you sure you want to delete this listing?'
-    //   );
 
-    //   if (confirmed) {
-    //     try {
-    //       await store.dispatch('deleteListing', id);
-    //     } catch (error) {
-    //       console.log('Delete Listing error:', error.message);
-    //     }
-    //   }
-    // };
     return {
       loading,
       house,
