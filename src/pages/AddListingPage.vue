@@ -63,7 +63,7 @@
       <div class="form-field">
         <label for="constructionYear">Construction Year *</label>
         <input
-          type="text"
+          type="date"
           id="constructionYear"
           v-model="formData.constructionYear"
           required
@@ -92,6 +92,7 @@
       <label for="decsription">Description *</label>
       <textarea v-model="formData.description" required></textarea>
       <button type="submit">Create Listing</button>
+      <p v-if="formError" class="error-message">{{ formError }}</p>
     </form>
   </div>
 </template>
@@ -127,9 +128,6 @@ export default {
     };
 
     const handleSubmit = async () => {
-      // console.log('submitted');
-      // const rawFormData = toRaw(formData);
-      // console.log('Form Data:', rawFormData);
       await store.dispatch('fetchAllHouses');
       const allHouses = store.state.allHouses;
       const houseId =
