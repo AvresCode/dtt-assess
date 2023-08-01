@@ -27,7 +27,9 @@
           <font-awesome-icon :icon="['far', 'square']" /> {{ house.size }} m2
         </p>
       </div>
-      <router-link :to="`/houses/${house.id}`"> View details</router-link>
+      <router-link :to="`/houses/${house.id}`" class="btn-detail">
+        View details</router-link
+      >
     </div>
   </div>
 </template>
@@ -69,5 +71,12 @@ img {
     min-width: 150px;
     height: 200px;
   }
+}
+.btn-detail {
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  color: white;
+  background-color: rgb(204, 202, 202);
+  border-radius: 1rem;
 }
 </style>
