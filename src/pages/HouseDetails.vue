@@ -40,6 +40,12 @@
         <div v-if="!isOwner">
           <button @click="handleDelete" class="button-delete">Delete</button>
           <button class="button-edit">Edit</button>
+          <ConfirmDialog
+            v-if="showConfirmDialog"
+            :message="'Are you sure you want to delete this listing?'"
+            @confirmed="handleDeleteConfirmed"
+            @canceled="handleDeleteCanceled"
+          />
         </div>
       </div>
     </div>
@@ -47,12 +53,15 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
-
+import ConfirmDialog from '../components/ConfirmDialog.vue';
 export default {
   name: 'HouseDetails',
+  components: {
+    ConfirmDialog,
+  },
 
   setup() {
     const store = useStore();
@@ -67,24 +76,51 @@ export default {
     const isOwner = computed(() => {
       return house.value && house.value.madeByMe;
     });
-    const handleDelete = async () => {
-      const confirmed = window.confirm(
-        'Are you sure you want to delete this listing?'
-      );
 
-      if (confirmed) {
-        try {
-          await store.dispatch('deleteListing', id);
-        } catch (error) {
-          console.log('Delete Listing error:', error.message);
-        }
-      }
+    const showConfirmDialog = ref(false);
+
+    const handleDelete = () => {
+      showConfirmDialog.value = true;
+      console.log('showConfirmDialog.value', showConfirmDialog.value);
     };
+
+    const handleDeleteConfirmed = async () => {
+      // User confirmed deletion, proceed with actual deletion
+      try {
+        await store.dispatch('deleteListing', id);
+      } catch (error) {
+        console.log('Delete Listing error:', error.message);
+      }
+
+      // Hide the confirmation dialog
+      showConfirmDialog.value = false;
+    };
+
+    const handleDeleteCanceled = () => {
+      // User canceled deletion, do nothing
+      showConfirmDialog.value = false;
+    };
+    // const handleDelete = async () => {
+    //   const confirmed = window.confirm(
+    //     'Are you sure you want to delete this listing?'
+    //   );
+
+    //   if (confirmed) {
+    //     try {
+    //       await store.dispatch('deleteListing', id);
+    //     } catch (error) {
+    //       console.log('Delete Listing error:', error.message);
+    //     }
+    //   }
+    // };
     return {
       loading,
       house,
       isOwner,
       handleDelete,
+      handleDeleteConfirmed,
+      handleDeleteCanceled,
+      showConfirmDialog,
     };
   },
 };
