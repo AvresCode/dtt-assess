@@ -8,6 +8,10 @@
         <h3>{{ house.location.street }} {{ house.location.houseNumber }}</h3>
         <p>€ {{ house.price }}</p>
         <p>
+          <font-awesome-icon
+            :icon="['fas', 'location-dot']"
+            class="location-icon"
+          />
           {{ house.location.zip }}
           {{ house.location.city }}
         </p>
@@ -113,5 +117,9 @@ img {
 .reaction-buttons {
   display: flex;
   gap: 1rem;
+}
+.location-icon {
+  margin-right: 0.3rem;
+  font-size: 1.2rem;
 }
 </style>
