@@ -119,8 +119,12 @@ export default {
 
     store.dispatch('fetchAllHouses');
 
-    // Computed properties
+    const onSearchTermUpdate = (newSearchTerm) => {
+      searchTerm.value = newSearchTerm;
+    };
+
     return {
+      onSearchTermUpdate,
       sortedFilteredHouses,
       toggleSortingOrderPrice,
       toggleSortingOrderSize,
@@ -129,12 +133,6 @@ export default {
       resultNumberMessage,
       loading,
     };
-  },
-  methods: {
-    onSearchTermUpdate(newSearchTerm) {
-      // this.$store.commit('setSearchTerm', newSearchTerm);
-      this.searchTerm = newSearchTerm;
-    },
   },
 };
 </script>
