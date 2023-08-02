@@ -28,7 +28,7 @@ const store = createStore({
           headers: { 'X-Api-Key': 'zL6vg_sRSaZfwACpB3MGOUeclmF1kiXr' },
         });
         const housesData = response.data;
-        console.log('Fetched houses', housesData);
+        // console.log('Fetched houses', housesData);
         commit('setAllHouses', housesData);
       } catch (e) {
         console.log('Houses fetch error:', e.message);
@@ -42,7 +42,7 @@ const store = createStore({
           headers: { 'X-Api-Key': 'zL6vg_sRSaZfwACpB3MGOUeclmF1kiXr' },
         });
         const oneHousesData = response.data[0];
-        console.log('Fetched details', oneHousesData);
+        // console.log('Fetched details', oneHousesData);
         commit('setOneHouse', oneHousesData);
       } catch (e) {
         console.log('House detail fetch error:', e.message);

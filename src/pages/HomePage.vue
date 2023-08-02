@@ -93,16 +93,14 @@ export default {
           .includes(searchTerm.value.trim().toLowerCase())
       );
 
-      // Sort by Price if Price button is clicked
       if (sortingOrderPrice.value !== 0) {
         return sortHousesByPrice(filteredHouses);
       }
 
-      // Sort by Size if Size button is clicked
       if (sortingOrderSize.value !== 0) {
         return sortHousesBySize(filteredHouses);
       }
-      // Return unsorted if neither button is clicked
+
       return filteredHouses;
     });
 
