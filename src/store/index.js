@@ -5,7 +5,6 @@ const store = createStore({
   state: {
     allHouses: [],
     searchTerm: '',
-    filteredHouses: [],
     oneHouse: {},
   },
   mutations: {
@@ -14,9 +13,6 @@ const store = createStore({
     },
     setSearchTerm: (state, searchTerm) => {
       state.searchTerm = searchTerm;
-    },
-    setFilteredHouses: (state, filteredHouses) => {
-      state.filteredHouses = filteredHouses;
     },
     setOneHouse: (state, oneHouseData) => {
       state.oneHouse = oneHouseData;
