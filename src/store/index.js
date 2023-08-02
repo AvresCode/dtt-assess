@@ -6,6 +6,7 @@ const store = createStore({
     allHouses: [],
     // searchTerm: '',
     oneHouse: {},
+    favorites: [],
   },
   mutations: {
     setAllHouses: (state, housesData) => {
@@ -16,6 +17,14 @@ const store = createStore({
     // },
     setOneHouse: (state, oneHouseData) => {
       state.oneHouse = oneHouseData;
+    },
+    addToFavorites: (state, houseId) => {
+      if (!state.favorites.includes(houseId)) {
+        state.favorites.push(houseId);
+      }
+    },
+    removeFromFavorites: (state, houseId) => {
+      state.favorites = state.favorites.filter((id) => id !== houseId);
     },
   },
 

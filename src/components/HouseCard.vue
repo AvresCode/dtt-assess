@@ -8,7 +8,6 @@
         <h3>{{ house.location.street }} {{ house.location.houseNumber }}</h3>
         <p>€ {{ house.price }}</p>
         <p>
-          <font-awesome-icon :icon="['fas', 'location-dot']" />
           {{ house.location.zip }}
           {{ house.location.city }}
         </p>
@@ -27,16 +26,44 @@
           <font-awesome-icon :icon="['far', 'square']" /> {{ house.size }} m2
         </p>
       </div>
-      <router-link :to="`/houses/${house.id}`" class="btn-detail">
-        View details</router-link
-      >
+      <div>
+        <font-awesome-icon
+          :icon="isFavorite ? ['fas', 'star'] : ['far', 'star']"
+          @click="toggleFavorite"
+          class="favorite-btn"
+        />
+        <router-link :to="`/houses/${house.id}`" class="btn-detail">
+          View details</router-link
+        >
+      </div>
     </div>
   </div>
 </template>
 <script>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+
 export default {
   name: 'HouseCard',
   props: { house: Object },
+  setup(props) {
+    const store = useStore();
+    const isFavorite = computed(() =>
+      store.state.favorites.includes(props.house.id)
+    );
+
+    const toggleFavorite = () => {
+      if (isFavorite.value) {
+        store.commit('removeFromFavorites', props.house.id);
+      } else {
+        store.commit('addToFavorites', props.house.id);
+      }
+    };
+    return {
+      isFavorite,
+      toggleFavorite,
+    };
+  },
 };
 </script>
 <style scoped>
@@ -78,5 +105,8 @@ img {
   color: white;
   background-color: rgb(204, 202, 202);
   border-radius: 1rem;
+}
+.favorite-btn {
+  cursor: pointer;
 }
 </style>
