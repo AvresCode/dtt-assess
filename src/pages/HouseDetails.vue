@@ -8,11 +8,11 @@
         <div class="text-section">
           <div>
             <h2>
-              {{ house.location.street }} {{ house.location.houseNumber }}
+              {{ house.location?.street }} {{ house.location?.houseNumber }}
             </h2>
             <p>
               <font-awesome-icon :icon="['fas', 'location-dot']" />
-              {{ house.location.zip }} {{ house.location.city }}
+              {{ house.location?.zip }} {{ house.location?.city }}
             </p>
             <div class="house-properties">
               <p>€ {{ house.price }}</p>
@@ -26,11 +26,11 @@
           <div class="house-properties">
             <p>
               <font-awesome-icon :icon="['fas', 'bed']" />
-              {{ house.rooms.bedrooms }}
+              {{ house.rooms?.bedrooms }}
             </p>
             <p>
               <font-awesome-icon :icon="['fas', 'bath']" />
-              {{ house.rooms.bathrooms }}
+              {{ house.rooms?.bathrooms }}
             </p>
           </div>
           <p>
