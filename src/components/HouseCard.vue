@@ -26,15 +26,15 @@
           <font-awesome-icon :icon="['far', 'square']" /> {{ house.size }} m2
         </p>
       </div>
-      <div>
+      <div class="reaction-buttons">
         <font-awesome-icon
           :icon="isFavorite ? ['fas', 'star'] : ['far', 'star']"
           @click="toggleFavorite"
           class="favorite-btn"
         />
         <router-link :to="`/houses/${house.id}`" class="btn-detail">
-          View details</router-link
-        >
+          <font-awesome-icon :icon="['fas', 'circle-info']"
+        /></router-link>
       </div>
     </div>
   </div>
@@ -100,13 +100,18 @@ img {
   }
 }
 .btn-detail {
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  color: white;
-  background-color: rgb(204, 202, 202);
-  border-radius: 1rem;
+  font-size: 1.2rem;
+  color: black;
+}
+.btn-detail:active {
+  color: black;
 }
 .favorite-btn {
   cursor: pointer;
+  font-size: 1.2rem;
+}
+.reaction-buttons {
+  display: flex;
+  gap: 1rem;
 }
 </style>

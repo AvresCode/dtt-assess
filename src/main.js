@@ -6,6 +6,7 @@ import {
   faMagnifyingGlass,
   faLocationDot,
   faStar,
+  faCircleInfo,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
@@ -26,7 +27,8 @@ library.add(
   faMagnifyingGlass,
   faLocationDot,
   faStar,
-  farStar
+  farStar,
+  faCircleInfo
 );
 app.component('font-awesome-icon', FontAwesomeIcon);
 
