@@ -53,7 +53,8 @@ export default {
   setup() {
     const store = useStore();
 
-    const searchTerm = computed(() => store.state.searchTerm);
+    /* const searchTerm = computed(() => store.state.searchTerm);*/
+    const searchTerm = ref('');
     const allHouses = computed(() => store.state.allHouses);
 
     const sortingOrderPrice = ref(0);
@@ -131,7 +132,8 @@ export default {
   },
   methods: {
     onSearchTermUpdate(newSearchTerm) {
-      this.$store.commit('setSearchTerm', newSearchTerm);
+      // this.$store.commit('setSearchTerm', newSearchTerm);
+      this.searchTerm = newSearchTerm;
     },
   },
 };

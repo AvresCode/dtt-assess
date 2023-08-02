@@ -4,16 +4,16 @@ import axios from 'axios';
 const store = createStore({
   state: {
     allHouses: [],
-    searchTerm: '',
+    // searchTerm: '',
     oneHouse: {},
   },
   mutations: {
     setAllHouses: (state, housesData) => {
       state.allHouses = housesData;
     },
-    setSearchTerm: (state, searchTerm) => {
-      state.searchTerm = searchTerm;
-    },
+    // setSearchTerm: (state, searchTerm) => {
+    //   state.searchTerm = searchTerm;
+    // },
     setOneHouse: (state, oneHouseData) => {
       state.oneHouse = oneHouseData;
     },
